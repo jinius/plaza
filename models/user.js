@@ -16,41 +16,24 @@ var UserManager = function(db) {
 UserManager.prototype.addUser = function(user, callback) {
 	if (! user.userId) return callback(new Error("userId not specified"));
 
-	this.db.collection("users", function(err, collection) {
+	this.db.insertOne("users", user, function(err, result) {
 		if (err) return callback(err);
-
-		collection.insert(user, function(err, result) {
-			if (err) return callback(err);
-
-			callback(null, user._id);
-		});
+		callback(null, user._id);
 	});
 };
 
 UserManager.prototype.getUser = function(authKey, callback) {
 	if (! authKey) return callback(new Error("authKey not specified"));
 
-	this.db.collection("users", function(err, collection) {
+	var query = { "_id" : ObjectID(authKey) };
+	this.db.findOne("users", query, function(err, result) {
 		if (err) return callback(err);
-
-		collection.findOne({
-			"_id" : ObjectID(authKey)
-		}, function(err, result) {
-			if (err) return callback(err);
-
-			callback(null, result);
-		});
+		callback(null, result);
 	});
 };
 
 UserManager.prototype.removeAllUser = function(callback) {
-	this.db.collection("users", function(err, collection) {
-		if (err) return callback(err);
-		collection.drop(function(err) {
-			if (err && err.message == "ns not found") return callback();
-			callback(err);
-		});
-	});
+	this.db.dropCollection("users", callback);
 };
 
 exports.UserManager = UserManager;

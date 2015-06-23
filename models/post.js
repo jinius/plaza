@@ -1,5 +1,7 @@
 "use strict";
 
+var ObjectID = require("mongodb").ObjectID;
+
 var PostManager = function(db) {
 	this.db = db.master;
 }
@@ -16,14 +18,26 @@ PostManager.prototype.addPost = function(post, callback) {
 	if (! post.title) return callback(new Error("title not specified"));
 	if (! post.contents) return callback(new Error("contents not specified"));
 
-	this.db.collection("posts", function(err, collection) {
+	this.db.insertOne("posts", post, function(err, result) {
 		if (err) return callback(err);
+		callback(null, post._id);
+	});
+};
 
-		collection.insert( post, function(err, result) {
-			if (err) return callback(err);
+// --------------------------------
+// Get a post
+//
+// Params :
+//	_id = postId
+//	callback = function(err, post)
+// --------------------------------
+PostManager.prototype.getPost = function(_id, callback) {
+	if (! _id) return callback(new Error("_id not specified"));
 
-			callback(null, post._id);
-		});
+	var query = { "_id" : ObjectID(_id) };
+	this.db.findOne("posts", query, function(err, result) {
+		if (err) return callback(err);
+		callback(null, result);
 	});
 };
 
