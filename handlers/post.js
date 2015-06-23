@@ -32,3 +32,36 @@ exports.create = function(req, res) {
 	});
 };
 
+exports.read = function(req, res) {
+	var _id = req.params._id;
+	console.log();
+	console.log("Read Post :", _id);
+	if (! _id) return res.status(400).json({ "error": "post id not specified" });
+
+	postManager.getPost(_id, function(err, post) {
+		if (err) return res.status(500).json({ "error": err.message });
+		res.json({ "error": null, "post" : { "title" : post.title, "contents" : post.contents } });
+	});
+};
+
+exports.readByWriterId = function(req, res) {
+	console.log();
+	console.log("Get Posts with Authorization :", req.get("Authorization"));
+	userManager.getUser(req.get("Authorization"), function(err, user) {
+		// Check authorization
+		if (err) return res.status(401).json({ "error": err.message });
+		if (! user) return res.status(401).json({ "error": "Authorization - user not found" });
+
+		postManager.getPostsByWriterId(user._id.toString(), 10, function(err, posts) {
+			if (err) return res.status(500).json({ "error": err.message });
+			var result = [];
+			posts.forEach(function(post) {
+				result.push({
+					"title" : post.title,
+					"contents" : post.contents
+				});
+			});
+			res.json({ "error": null, "posts": result });
+		});
+	});
+};

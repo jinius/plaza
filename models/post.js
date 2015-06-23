@@ -41,5 +41,29 @@ PostManager.prototype.getPost = function(_id, callback) {
 	});
 };
 
+// --------------------------------
+// Get posts by writer id
+//
+// Params :
+//	_id = writerId
+//	callback = function(err, posts)
+// --------------------------------
+PostManager.prototype.getPostsByWriterId = function(_id, count, callback) {
+	if (! _id) return callback(new Error("_id not specified"));
+
+	this.db.collection("posts", function(err, collection) {
+		if (err) return callback(err);
+		var query = { "writerId" : _id };
+		collection.find(query).limit(count).toArray(function(err, posts) {
+			if (err) return callback(err);
+			callback(null, posts);
+		});
+	});
+};
+
+PostManager.prototype.removeAllPost = function(callback) {
+	this.db.dropCollection("posts", callback);
+};
+
 exports.PostManager = PostManager;
 

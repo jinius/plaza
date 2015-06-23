@@ -36,9 +36,9 @@ describe("PostManager test", function() {
 	it("get a post", function(done) {
 		// DB : Add new post
 		var post1 = {
-			"writerId" : "add post writer id",
-			"title" : "add post title",
-			"contents" : "add post contents"
+			"writerId" : "get post writer id",
+			"title" : "get post title",
+			"contents" : "get post contents"
 		};
 		db.master.insertOne("posts", post1, function(err, result) {
 			// Post Manager : Find the post
@@ -52,7 +52,25 @@ describe("PostManager test", function() {
 		});
 	});
 
-	it("get posts");
+	it("get posts by writer id", function(done) {
+		// DB : Add 10 post
+		var posts = [];
+		for (var i = 0; i < 10; ++i) {
+			posts.push({
+				"writerId" : "test",
+				"title" : "title " + i,
+				"contents" : "contents " + i
+			});
+		}
+		db.master.insertMany("posts", posts, function(err, result) {
+			if (err) return done(err);
+			postManager.getPostsByWriterId("test", 5, function(err, posts) {
+				if (err) return done(err);
+				should.equal(posts.length, 5);
+				done();
+			});
+		});
+	});
 
 	it("modify a post");
 

@@ -59,6 +59,14 @@ Db.prototype.insertOne = function() {
 	});
 };
 
+Db.prototype.insertMany = function() {
+	var args = Array.prototype.slice.call(arguments, 1);
+	this.collection(arguments[0], function(err, collection) {
+		if (err) return args.pop()(err);
+		collection.insertMany.apply(collection, args);
+	});
+};
+
 Db.prototype.dropCollection = function(collectionName, callback) {
 	this.collection(collectionName, function(err, collection) {
 		if (err) return callback(err);

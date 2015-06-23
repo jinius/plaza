@@ -21,7 +21,7 @@ describe("[api] Authentication", function() {
 			.expect(200)
 			.expect("Content-Type", /json/)
 			.end(function(err, res) {
-				if (err) throw new Error(res.text);
+				if (err) return done(new Error(res.text));
 
 				should.not.exist(res.body.error);
 				should.exist(authKey = res.body.authKey);
@@ -35,7 +35,7 @@ describe("[api] Authentication", function() {
 			.expect(200)
 			.expect("Content-Type", /json/)
 			.end(function(err, res) {
-				if (err) throw new Error(res.text);
+				if (err) return done(new Error(res.text));
 
 				should.not.exist(res.body.error);
 				should.notEqual(res.body.authKey, authKey);
