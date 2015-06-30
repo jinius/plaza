@@ -54,7 +54,7 @@ describe("[api] Post", function() {
 			request(url).post(path)
 			.set("Authorization", authKey)
 			.send(samplePost)
-			.expect(200)
+			.expect(201)
 			.end(function(err, res) {
 				if (err) err = new Error(res.text);
 				done(err);

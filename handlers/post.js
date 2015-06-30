@@ -27,7 +27,7 @@ exports.create = function(req, res) {
 		};
 		postManager.addPost(post, function(err, _id) {
 			if (err) return res.status(500).json({ "error": err.message });
-			res.json({ "error": null, "postId": _id });
+			res.status(201).json({ "error": null, "postId": _id });
 		});
 	});
 };
