@@ -1,0 +1,11 @@
+<section class="list">
+	<header>
+		<a ng-href="#/post/new"><button>New Post</button></a>
+	</header>
+	<ul>
+		<li ng-repeat="post in postCtrl.posts">
+			<a ng-href="#/post/{{post._id}}">{{post.title}}</a>
+		</li>
+	</ul>
+</section>
+

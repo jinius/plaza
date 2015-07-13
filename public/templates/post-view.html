@@ -1,0 +1,16 @@
+<article>
+	<header>
+		<h1>{{post.title}}</h1>
+		<img ng-click="facebook(post)" src="/images/facebook.png" alt="Send to Facebook">
+	</header>
+	<textarea ng-bind="post.contents" readonly></textarea>
+	<footer>
+		<div>
+			<textarea ng-model="post.comment" placeholder="Add comment"></textarea>
+			<button type="button">Add</button>
+		</div>
+		<div ng-repeat="comment in post.comments">
+			<textarea ng-bind="comment.contents" readonly></textarea>
+		</div>
+	</footer>
+</article>
