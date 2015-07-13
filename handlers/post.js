@@ -52,15 +52,17 @@ exports.readByWriterId = function(req, res) {
 		if (err) return res.status(401).json({ "error": err.message });
 		if (! user) return res.status(401).json({ "error": "Authorization - user not found" });
 
-		postManager.getPostsByWriterId(user._id.toString(), 10, function(err, posts) {
+		postManager.getPostsByWriterId(user._id, 10, function(err, posts) {
 			if (err) return res.status(500).json({ "error": err.message });
 			var result = [];
 			posts.forEach(function(post) {
 				result.push({
+					"_id" : post._id.toString(),
 					"title" : post.title,
 					"contents" : post.contents
 				});
 			});
+			console.log(result);
 			res.json({ "error": null, "posts": result });
 		});
 	});

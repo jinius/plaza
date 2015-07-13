@@ -13,6 +13,10 @@ describe("PostManager test", function() {
 		db.master.dropCollection("posts", done);
 	});
 
+	afterEach(function(done) {
+		db.master.dropCollection("posts", done);
+	});
+
 	it("add post", function(done) {
 		// Post Manager : Add new post
 		var post = {

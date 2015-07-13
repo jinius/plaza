@@ -27,10 +27,11 @@ describe("[api] Post", function() {
 		userManager.addUser(user, function(err, _id) {
 			if (err) return done(err);
 			// Save the authKey for test
-			authKey = _id.toString();
+			authKey = _id;
 			postManager.addPost(post, function(err, _id) {
+				if (err) return done(err);
 				// Save the postId for test
-				postId = _id.toString();
+				postId = _id;
 				done(err);
 			});
 		});
@@ -146,6 +147,7 @@ describe("[api] Post", function() {
 						should.equal(posts.length, 10);
 						posts.forEach(function(post) {
 							should.not.exist(post.writerId);
+							should.exist(post._id);
 							should.exist(post.title);
 							should.exist(post.contents);
 						});
