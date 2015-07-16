@@ -62,7 +62,6 @@ exports.readByWriterId = function(req, res) {
 					"contents" : post.contents
 				});
 			});
-			console.log(result);
 			res.json({ "error": null, "posts": result });
 		});
 	});
