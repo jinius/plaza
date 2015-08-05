@@ -13,7 +13,7 @@ exports.register = function(req, res) {
 
 	var user = { "userId" : body.userId };
 	userManager.addUser(user, function(err, _id) {
-		if (err) return res.json({ "error": error.message });
+		if (err) return res.json({ "error": err.message });
 		res.json({ "error": null, "authKey": _id });
 	});
 };

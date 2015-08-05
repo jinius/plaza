@@ -4,7 +4,7 @@ var ObjectID = require("mongodb").ObjectID;
 
 var PostManager = function(db) {
 	this.db = db.master;
-}
+};
 
 // --------------------------------
 // Add post
@@ -34,7 +34,7 @@ PostManager.prototype.addPost = function(post, callback) {
 PostManager.prototype.getPost = function(_id, callback) {
 	if (! _id) return callback(new Error("_id not specified"));
 
-	var query = { "_id" : ObjectID(_id) };
+	var query = { "_id" : new ObjectID(_id) };
 	this.db.findOne("posts", query, function(err, result) {
 		if (err) return callback(err);
 		callback(null, result);

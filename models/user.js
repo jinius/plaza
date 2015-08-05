@@ -4,7 +4,7 @@ var ObjectID = require("mongodb").ObjectID;
 
 var UserManager = function(db) {
 	this.db = db.master;
-}
+};
 
 // --------------------------------
 // Register user or modify pen name
@@ -25,7 +25,7 @@ UserManager.prototype.addUser = function(user, callback) {
 UserManager.prototype.getUser = function(authKey, callback) {
 	if (! authKey) return callback(new Error("authKey not specified"));
 
-	var query = { "_id" : ObjectID(authKey) };
+	var query = { "_id" : new ObjectID(authKey) };
 	this.db.findOne("users", query, function(err, result) {
 		if (err) return callback(err);
 		callback(null, result);

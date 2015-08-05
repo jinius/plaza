@@ -79,7 +79,7 @@ Db.prototype.dropCollection = function(collectionName, callback) {
 };
 
 var master = new Db(config.master);
-var slave = config.slave ? new Db(config.slave) : this.master;
+var slave = config.slave ? new Db(config.slave) : master;
 
 exports.master = master;
 exports.slave = slave;
