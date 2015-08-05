@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 angular.module("ZimilBlog")
 .controller("PostViewController", ["$scope", "$http", "$routeParams", function($scope, $http, $routeParams) {

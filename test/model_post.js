@@ -27,7 +27,7 @@ describe("PostManager test", function() {
 		postManager.addPost(post, function(err, _id) {
 			// DB : Find the post
 			if (err) return done(err);
-			var query = { "_id" : ObjectID(_id) };
+			var query = { "_id" : new ObjectID(_id) };
 			db.master.findOne("posts", query, function(err, result) {
 				// Compare _id
 				if (err) return done(err);

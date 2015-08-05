@@ -5,8 +5,24 @@ module.exports = function(grunt) {
 	grunt.initConfig({
 		pkg: grunt.file.readJSON("package.json"),
 		jshint: {
-			files: ["Gruntfile.js", "handlers/**/*.js", "models/**/*.js", "routes/**/*.js"],
-			options: { node: true }
+			server: {
+				src: ["Gruntfile.js", "handlers/**/*.js", "models/**/*.js", "routes/**/*.js", "test/**/*.js"],
+				options: {
+					node: true,
+					mocha: true
+				}
+			},
+			client: {
+				src: ["public/javascripts/**/*.js"],
+				options: {
+					browser: true,
+					globalstrict: true,
+					globals: {
+						angular: true,
+						console: true
+					}
+				}
+			}
 		}
 	});
 

@@ -19,7 +19,7 @@ describe("UserManager test", function() {
 		userManager.addUser(user, function(err, _id) {
 			// DB : Find the user
 			if (err) return done(err);
-			var query = { "_id" : ObjectID(_id) };
+			var query = { "_id" : new ObjectID(_id) };
 			db.master.findOne("users", query, function(err, result) {
 				// Compare _id
 				if (err) return done(err);
@@ -52,7 +52,7 @@ describe("UserManager test", function() {
 			if (err) return done(err);
 			userManager.removeAllUser(function(err) {
 				// DB : Find the user
-				var query = { "_id" : ObjectID(user._id) };
+				var query = { "_id" : new ObjectID(user._id) };
 				db.master.findOne("users", query, function(err, result) {
 					should.not.exist(result);
 					done();
