@@ -4,10 +4,15 @@ var post = require("../handlers/post");
 
 var router = express.Router();
 
-router.post("/user/register", user.register);
-router.post("/post", post.create);
-router.get("/post/:_id", post.read);
-router.get("/post", post.readByWriterId);
+router.route("/user/register")
+	.post(user.register);
+
+router.route("/post")
+	.post(post.create)
+	.get(post.readByWriterId);
+
+router.route("/post/:_id")
+	.get(post.read);
 
 module.exports = router;
 
