@@ -9,12 +9,10 @@ var postManager = new PostManager(db);
 
 exports.create = function(req, res) {
 	var body = req.body || {};
-	console.log();
-	console.log("Add Post :", typeof body, body);
+
 	if (! body.title) return res.status(400).json({ "error": "no title" });
 	if (! body.contents) return res.status(400).json({ "error": "no contents" });
 
-	console.log("with Authorization :", req.get("Authorization"));
 	userManager.getUser(req.get("Authorization"), function(err, user) {
 		// Check authorization
 		if (err) return res.status(401).json({ "error": err.message });
@@ -34,8 +32,7 @@ exports.create = function(req, res) {
 
 exports.read = function(req, res) {
 	var _id = req.params._id;
-	console.log();
-	console.log("Read Post :", _id);
+
 	if (! _id) return res.status(400).json({ "error": "post id not specified" });
 
 	postManager.getPost(_id, function(err, post) {
@@ -45,8 +42,6 @@ exports.read = function(req, res) {
 };
 
 exports.readByWriterId = function(req, res) {
-	console.log();
-	console.log("Get Posts with Authorization :", req.get("Authorization"));
 	userManager.getUser(req.get("Authorization"), function(err, user) {
 		// Check authorization
 		if (err) return res.status(401).json({ "error": err.message });
